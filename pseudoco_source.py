@@ -1,5 +1,6 @@
 import sqlite3
 
+
 #Create table
 conn = sqlite3.connect('factory.db')
 c = conn.cursor()
