@@ -4,23 +4,15 @@ import sqlite3
 conn = sqlite3.connect('factory.db')
 c = conn.cursor()
 
-#c.execute('''DROP TABLE machine''')
+c.execute('''DROP TABLE machine''')
 
-c.execute('''CREATE TABLE IF NOT EXISTS machine
+c.execute('''CREATE TABLE machine
              (machine_no text, 
              lot_no text, 
              down_factor text,
              downtime integer, 
              runtime integer)
 ''')
-
-def checkTable():
-    c.execute("""SELECT name FROM sqlite_master WHERE type='table' AND name='machine'""")
-    result = c.fetchone()
-    if result == None:
-        inputFakeData()
-
-checkTable()
 
 def inputFakeData():
     fake_data = [
@@ -29,7 +21,9 @@ def inputFakeData():
             ('F03','22ABCD003','PM',20,50),
             ('F02','22ABCD004','BM',10,50)
         ]
-    c.executemany("INSERT INTO machine VALUES (?,?,?,?)",fake_data)
+    c.executemany("INSERT INTO machine VALUES (?,?,?,?,?)",fake_data)
+
+inputFakeData()
 
 def Menu():
     #Display main menu
@@ -75,7 +69,7 @@ def machine_data_display():
     c.execute("SELECT rowid, * FROM machine")
 
     items = c.fetchall()
-
+    
     from tabulate import tabulate
     print(tabulate(items, headers=["MACHINE NO","LOT NO.","DOWNTIME FACTOR","DOWNTIME", "RUNTIME"]))
     
