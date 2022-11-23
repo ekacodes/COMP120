@@ -32,7 +32,7 @@ def Menu():
     print("---------------------------")
     print("1) Input machine data")
     print("2) Machine data report")
-    print("3) Menu 3")
+    print("3) Machine efficiency report")
     print("4) Menu 4")
     print("0) Exit")
     print("---------------------------")
@@ -47,6 +47,9 @@ def Menu():
     
         if response == '2':
             machine_data_display()
+            
+        if response == '3':
+            machine_efficiency()
 
 def machine_data_entry():
     print()
@@ -75,7 +78,36 @@ def machine_data_display():
     
     print("\n"+footer.center(70, '*'))
     Menu()
+    
+def machine_efficiency():
+    header = " MACHINE EFFICIENCY REPORT "
+    footer = " END OF REPORT "
+    print("\n"+header.center(70, '*')+"\n")
+    c.execute("SELECT sum(downtime) FROM machine WHERE machine_no = 'F01'")
+    sum_down1 = c.fetchone()[0]
+    c.execute("SELECT sum(runtime) FROM machine WHERE machine_no = 'F01'")
+    sum_run1 = c.fetchone()[0]
+    
+    c.execute("SELECT sum(downtime) FROM machine WHERE machine_no = 'F02'")
+    sum_down2 = c.fetchone()[0]
+    c.execute("SELECT sum(runtime) FROM machine WHERE machine_no = 'F02'")
+    sum_run2 = c.fetchone()[0]
+    
+    c.execute("SELECT sum(downtime) FROM machine WHERE machine_no = 'F03'")
+    sum_down3 = c.fetchone()[0]
+    c.execute("SELECT sum(runtime) FROM machine WHERE machine_no = 'F03'")
+    sum_run3 = c.fetchone()[0]
 
+    
+    print("Machine","\tEfficiency")
+    
+    print(f"F01\t\t{'{0:.0f}%'.format(((sum_run1-sum_down1)/sum_run1)*100)}")
+    print(f"F02\t\t{'{0:.0f}%'.format(((sum_run2-sum_down2)/sum_run2)*100)}")
+    print(f"F03\t\t{'{0:.0f}%'.format(((sum_run3-sum_down3)/sum_run3)*100)}")
+    
+    print("\n"+footer.center(70, '*'))
+    Menu()
+    
 Menu()
 
 
