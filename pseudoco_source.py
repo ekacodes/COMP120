@@ -16,8 +16,8 @@ c.execute('''CREATE TABLE machine
 
 def inputFakeData():
     fake_data = [
-            ('F01','22ABCD001','QCCheck',30,50),
-            ('F02','22ABCD002','Eval',40,50),
+            ('F01','22ABCD001','Quality Check',30,50),
+            ('F02','22ABCD002','Evaluation',40,50),
             ('F03','22ABCD003','PM',20,50),
             ('F02','22ABCD004','BM',10,50)
         ]
